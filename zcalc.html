@@ -101,7 +101,7 @@ function refresh(){
 	document.getElementById("balratio").innerHTML = Math.round(((getCrateValue(bal,tl))/parseInt(document.getElementById("mapleprice").value*5+44100+bsp))*10000)/10000;
 	var url_string = window.location.href;
 	if(url_string.includes("&tl")){
-		url_string = url_string.substring(0,url_string.indexOf("&tl")+3)+tl;
+		url_string = url_string.substring(0,url_string.indexOf("&tl")+4)+tl;
 	}
 	else{
 		url_string+="?&tl="+tl;
