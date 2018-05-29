@@ -16,8 +16,8 @@ var bronze = 29670;
 var brass = 31590;
 var calph = 50790;
 var bal = 28710;
+var distance = 2.1385;
 var getCrateValue = function(price,tradelevel){
-	var distance = 2.1385;
 	var bargain = 1.05+tradelevel*0.005;
 	var bonus = bargain * distance;
 	var crateprice = price*bonus;
@@ -27,7 +27,6 @@ var getCrateValue = function(price,tradelevel){
 	return parseInt(crateprice);
 }
 var getMetalZero = function(price,tradelevel){
-	var distance = 2.1385;
 	var bargain = 1.05+tradelevel*0.005;
 	var bonus = bargain * distance;
 	var crateprice = price*bonus;
@@ -37,7 +36,6 @@ var getMetalZero = function(price,tradelevel){
 	return parseInt((crateprice-bsp)/10);
 }
 var getCalphZero = function(price,tradelevel){
-	var distance = 2.1385;
 	var bargain = 1.05+tradelevel*0.005;
 	var bonus = bargain * distance;
 	var crateprice = price*bonus;
@@ -47,7 +45,6 @@ var getCalphZero = function(price,tradelevel){
 	return parseInt((crateprice-(bsp+110250))/5);
 }
 var getBalZero = function(price,tradelevel){
-	var distance = 2.1385;
 	var bargain = 1.05+tradelevel*0.005;
 	var bonus = bargain * distance;
 	var crateprice = price*bonus;
@@ -82,6 +79,16 @@ refresh();
 function refresh(){
 	var tl = 1;
 	var selectedtrade = document.getElementById("tradetitle").selectedIndex;
+	var selectedlocation = document.getElementById("location").selectedIndex;
+	if(selectedlocation==0){
+		distance = 2.1385;
+	}
+	else if(selectedlocation=1){
+		distance = 2.0407;
+	}
+	else if(selectedlocation=2){
+		distance = 1.9984;
+	}
 	if(selectedtrade==6){
 		selectedtrade += 2
 	}
@@ -112,7 +119,13 @@ function refresh(){
 
 }
 </script>
-<p>This calculator assumes you always take the desert buff if you're high enough level, and that your crates are produced in Grana.</p>
+<p>This calculator assumes you always take the desert buff if you're high enough level.</p>
+
+<select id = "location">
+  <option value="grana">Grana</option>
+  <option value="oldwisdom">Old Wisdom</option>
+  <option value="trent">Trent</option>
+</select>
 <select id = "tradetitle">
   <option value="beg">Beginner</option>
   <option value="app">Apprentice</option>
