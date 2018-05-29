@@ -83,10 +83,10 @@ function refresh(){
 	if(selectedlocation==0){
 		distance = 2.1385;
 	}
-	else if(selectedlocation=1){
+	else if(selectedlocation==1){
 		distance = 2.0407;
 	}
-	else if(selectedlocation=2){
+	else if(selectedlocation==2){
 		distance = 1.9984;
 	}
 	if(selectedtrade==6){
@@ -121,7 +121,7 @@ function refresh(){
 </script>
 <p>This calculator assumes you always take the desert buff if you're high enough level.</p>
 
-<select id = "location">
+<select id = "location" onclick="refresh()">
   <option value="grana">Grana</option>
   <option value="oldwisdom">Old Wisdom</option>
   <option value="trent">Trent</option>
