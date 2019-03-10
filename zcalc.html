@@ -148,7 +148,10 @@ function refresh(){
 	if(getv("brassprice")!=brassd){
 		updateURLsave("&ap=",getv("brassprice"));
 	}*/
-	updateURLsave("&tl=",tl);
+	var url = new URL(window.location.href);
+	url.searchParams.set("tl",tl);
+	
+	document.getElementById("urlsave").value = url;
 	//document.getElementById("calphvalue").innerHTML = getZero(calph,tl);
 	//document.getElementById("balvalue").innerHTML = getZero(bal,tl);
 
@@ -161,10 +164,20 @@ function getv(stringname){
 }
 function updateURLsave(stringname, value){
 	var url_string = window.location.href;
+	var params = url_string.substring(url_string.indexOf("?"));
+
 	if(url_string.includes(stringname)){
-		end_string = url_string.substring(url_string.substring(url_string.indexOf(stringname)+4).indexOf("&"));
-		console.log(end_string);
-		url_string = url_string.substring(0,url_string.indexOf(stringname)+4)+value+end_string;
+
+
+
+		/*
+	console.log("test2");
+		param_start_index = url_string.indexOf(stringname);
+		param_end_index = (url_string.substring(url_string.indexOf(stringname)+4).indexOf("&")>-1)?url_string.substring(url_string.indexOf(stringname)+4).indexOf("&"):url_string.length;
+
+		console.log(param_start_index+", "+param_end_index);
+		end_string = url_string.substring();
+		url_string = url_string.substring(0,url_string.indexOf(stringname)+4)+value+end_string;*/
 	}
 	else{
 		url_string+=stringname+value;
