@@ -163,7 +163,8 @@ function updateURLsave(stringname, value){
 	var url_string = window.location.href;
 	if(url_string.includes(stringname)){
 		end_string = url_string.substring(url_string.indexOf(stringname)+4).indexOf("&")+url_string.indexOf(stringname)+4;
-		url_string = url_string.substring(0,url_string.indexOf(stringname)+4)+value+url_string.substring(end_string);
+		console.log(end_string);
+		url_string = url_string.substring(0,url_string.indexOf(stringname)+4)+value+end_string;
 	}
 	else{
 		url_string+=stringname+value;
