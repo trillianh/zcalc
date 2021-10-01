@@ -20,6 +20,7 @@ var bronze = 29670;
 var brass = 31590;
 var calph = 50790;
 var bal = 28710;
+var med = 40230;
 var steeld = 7700;
 var bronzed = 10730;
 var brassd = 11000;
@@ -42,7 +43,7 @@ var getMetalZero = function(price,tradelevel){
 	}
 	return parseInt((crateprice-bsp)/10);
 }
-var getCalphZero = function(price,tradelevel){
+/*var getCalphZero = function(price,tradelevel){
 	var bargain = 1.05+tradelevel*0.005;
 	var bonus = bargain * distance;
 	var crateprice = price*bonus;
@@ -59,7 +60,7 @@ var getBalZero = function(price,tradelevel){
 		crateprice *= 1.5;
 	}
 	return parseInt((crateprice-(bsp+9000*5))/5);
-}
+}*/
 function firstload(){
 var url_string = window.location.href;
 var url = new URL(url_string);
@@ -108,8 +109,42 @@ function maxstack(){
 	document.getElementById("brassq").value=7158;
 	document.getElementById("calphq").value=7158;
 	document.getElementById("balq").value=7158;
+	document.getElementById("medq").value=7158;
 
 	refresh();
+}
+function plusstack(){
+	document.getElementById("steelq").value=parseInt(document.getElementById("steelq").value)+7158;
+	document.getElementById("bronzeq").value=parseInt(document.getElementById("bronzeq").value)+7158;
+	document.getElementById("brassq").value=parseInt(document.getElementById("brassq").value)+7158;
+	document.getElementById("calphq").value=parseInt(document.getElementById("calphq").value)+7158;
+	document.getElementById("balq").value=parseInt(document.getElementById("balq").value)+7158;
+	document.getElementById("medq").value=parseInt(document.getElementById("medq").value)+7158;
+
+	refresh();
+
+}
+function addstack(row){
+	switch(row){
+		case 1:
+	document.getElementById("steelq").value=parseInt(document.getElementById("steelq").value)+7158;
+	break;
+	case 2:
+	document.getElementById("bronzeq").value=parseInt(document.getElementById("bronzeq").value)+7158;
+	break;
+	case 3:
+	document.getElementById("brassq").value=parseInt(document.getElementById("brassq").value)+7158;
+	break;
+	case 4:
+	document.getElementById("calphq").value=parseInt(document.getElementById("calphq").value)+7158;
+	break;
+	case 5:
+	document.getElementById("balq").value=parseInt(document.getElementById("balq").value)+7158;
+	break;
+	case 6:
+	document.getElementById("medq").value=parseInt(document.getElementById("medq").value)+7158;
+	break;
+	}
 }
 function refresh(){
 	var tl = 1;
@@ -135,19 +170,22 @@ function refresh(){
 	document.getElementById("brassvalue").innerHTML = getMetalZero(brass,tl);
 	document.getElementById("calphvalue").innerHTML =  " ";
 	document.getElementById("balvalue").innerHTML = " ";
+	document.getElementById("medvalue").innerHTML = " ";
 
 	document.getElementById("steelratio").innerHTML = Math.round((getCrateValue(steel,tl)/parseInt(getv("steelprice")*10+bsp))*10000)/10000;
 	document.getElementById("bronzeratio").innerHTML = Math.round((getCrateValue(bronze,tl)/parseInt(getv("bronzeprice")*10+bsp))*10000)/10000;
 	document.getElementById("brassratio").innerHTML = Math.round((getCrateValue(brass,tl)/parseInt(getv("brassprice")*10+bsp))*10000)/10000;
 	document.getElementById("calphratio").innerHTML = Math.round(((getCrateValue(calph,tl))/parseInt(getv("firprice")*5+getv("cedarprice")*5+getv("birchprice")*5+bsp))*10000)/10000;
 	document.getElementById("balratio").innerHTML = Math.round(((getCrateValue(bal,tl))/parseInt(getv("mapleprice")*5+getv("ashprice")*5+bsp))*10000)/10000;
+	document.getElementById("medratio").innerHTML = Math.round(((getCrateValue(bal,tl))/parseInt(getv("acaciaprice")*5+getv("whitecedarprice")*5+bsp))*10000)/10000;
 	document.getElementById("steelt").innerHTML = Number(getCrateValue(steel,tl)*getv("steelq")).toLocaleString();
 	document.getElementById("bronzet").innerHTML = Number(getCrateValue(bronze,tl)*getv("bronzeq")).toLocaleString();
 	document.getElementById("brasst").innerHTML = Number(getCrateValue(brass,tl)*getv("brassq")).toLocaleString();
 	document.getElementById("calpht").innerHTML = Number(getCrateValue(calph,tl)*getv("calphq")).toLocaleString();
 	document.getElementById("balt").innerHTML = Number(getCrateValue(bal,tl)*getv("balq")).toLocaleString();
+	document.getElementById("medt").innerHTML = Number(getCrateValue(med,tl)*getv("medq")).toLocaleString();
 	document.getElementById("sum").innerHTML = Number(gethv("steelt")+gethv("bronzet")+gethv("brasst")+gethv("calpht")+gethv("balt")).toLocaleString();
-	console.log(Number(gethv("steelt")+gethv("bronzet")+gethv("brasst")+gethv("calpht")+gethv("balt")).toLocaleString());
+	console.log(Number(gethv("steelt")+gethv("bronzet")+gethv("brasst")+gethv("calpht")+gethv("balt")+gethv("medt")).toLocaleString());
 	/*if(getv("steelprice")!=steeld){
 		updateURLsave("&sp=",getv("steelprice"));
 	}
@@ -219,17 +257,19 @@ function updateURLsave(stringname, value){
   </p>
   <table onkeyup="refresh()" onkeydown="refresh()" onclick="refresh()" >
   	<tr>
-  		<th><input type="Button" id="max" value="max" onclick="maxstack()"><td></td></th><th>Zero</th><th>Buy</th><th>Margin</th><th>Value</td>
+  		<td></td><th><input type="Button" id="max" value="max" onclick="maxstack()"><td></td></th><th>Zero</th><th>Buy</th><th>Margin</th><th>Value</td>
   	</tr>
-  	<tr><td><input type="text" id="steelq" value="1" size="1">x </td><td>Steel:</td><td id="steelvalue">0</td><td style="text-align: center;"><input type="text" id="steelprice" value="7700" size="1"></td><td id="steelratio">1</td><td id="steelt" style="text-align: right;"></td>
+  	<tr><td><input type="Button" id="addstack" value="+stack" onclick="addstack(1)"></td><td><input type="text" id="steelq" value="1" size="1">x </td><td>Steel:</td><td id="steelvalue">0</td><td style="text-align: center;"><input type="text" id="steelprice" value="7700" size="1"></td><td id="steelratio">1</td><td id="steelt" style="text-align: right;"></td>
   	</tr>
-  	<tr><td><input type="text" id="bronzeq" value="1" size="1">x </td><td>Bronze:</td><td id="bronzevalue">0</td><td style="text-align: center;"><input type="text" id="bronzeprice" value="10730" size="1"></td><td id="bronzeratio">1</td><td id="bronzet" style="text-align: right;"></td>
+  	<tr><td><input type="Button" id="addstack" value="+stack" onclick="addstack(2)"></td><td><input type="text" id="bronzeq" value="1" size="1">x </td><td>Bronze:</td><td id="bronzevalue">0</td><td style="text-align: center;"><input type="text" id="bronzeprice" value="10730" size="1"></td><td id="bronzeratio">1</td><td id="bronzet" style="text-align: right;"></td>
   	</tr>
-  	<tr><td><input type="text" id="brassq" value="1" size="1">x	</td><td>Brass:</td><td id="brassvalue">0</td><td style="text-align: center;"><input type="text" id="brassprice" value="11000" size="1"></td><td id="brassratio">1</td><td id="brasst" style="text-align: right;"></td>
+  	<tr><td><input type="Button" id="addstack" value="+stack" onclick="addstack(3)"></td><td><input type="text" id="brassq" value="1" size="1">x	</td><td>Brass:</td><td id="brassvalue">0</td><td style="text-align: center;"><input type="text" id="brassprice" value="11000" size="1"></td><td id="brassratio">1</td><td id="brasst" style="text-align: right;"></td>
   	</tr>
-  	<tr><td><input type="text" id="calphq" value="1" size="1">x </td><td>Calph:</td><td id="calphvalue">0</td><td style="text-align: center;"><input type="text" id="firprice" value="15000" size="1"><input type="text" id="birchprice" value="10100" size="1"><input type="text" id="cedarprice" value="12500" size="1"></td><td id="calphratio">1</td><td id="calpht" style="text-align: right;"></td>
+  	<tr><td><input type="Button" id="addstack" value="+stack" onclick="addstack(4)"></td><td><input type="text" id="calphq" value="1" size="1">x </td><td>Calph:</td><td id="calphvalue">0</td><td style="text-align: center;"><input type="text" id="firprice" value="15000" size="1"><input type="text" id="birchprice" value="10100" size="1"><input type="text" id="cedarprice" value="12500" size="1"></td><td id="calphratio">1</td><td id="calpht" style="text-align: right;"></td>
   	</tr>
-  	<tr><td><input type="text" id="balq" value="1" size="1">x </td><td>Balenos:</td><td id="balvalue">0</td><td style="text-align: center;"><input type="text" id="mapleprice" value="10800" size="1"><input type="text" id="ashprice" value="8800" size="1"></td><td id="balratio">1</td><td id="balt" style="text-align: right;"></td>
+  	<tr><td><input type="Button" id="addstack" value="+stack" onclick="addstack(5)"></td><td><input type="text" id="balq" value="1" size="1">x </td><td>Balenos:</td><td id="balvalue">0</td><td style="text-align: center;"><input type="text" id="mapleprice" value="10800" size="1"><input type="text" id="ashprice" value="8800" size="1"></td><td id="balratio">1</td><td id="balt" style="text-align: right;"></td>
+  	</tr>
+  	<tr><td><input type="Button" id="addstack" value="+stack" onclick="addstack(6)"></td><td><input type="text" id="medq" value="1" size="1">x </td><td>Mediah:</td><td id="medvalue">0</td><td style="text-align: center;"><input type="text" id="acaciaprice" value="10800" size="1"><input type="text" id="whitecedarprice" value="8800" size="1"></td><td id="medratio">1</td><td id="medt" style="text-align: right;"></td>
   	</tr>
   	<tr><td></td><td></td><td></td><td></td><td>Total:</td><td id="sum">asdf</td>
   </table>
