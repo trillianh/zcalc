@@ -1,15 +1,61 @@
 
 var bsp = 3810;
-const steel = 33648;
-const bronze = 50439;
-const brass = 56862;
-const calph = 98640;
-const bal = 55170;
-const med = 77850;
-var steeld = 7700;
-var bronzed = 10730;
-var brassd = 11000;
+const prices = {
+	steel:33648,
+	bronze:50439,
+	brass:56862,
+	calpheon:98640,
+	balenos:55170,
+	mediah:77850,
+	serendia:62730,
+	jewelry:340254,
+	vanadium:95097,
+	titanium:96198,
+	mythril:384865,
+	copperore:1932,
+	ironore:2157,
+	leadore:2271,
+	tinore:2157,
+	zincore:3249
+}
+
+class Toggle extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {isToggleOn: true};
+
+		// This binding is necessary to make `this` work in the callback
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick() {
+		this.setState(prevState => ({
+		isToggleOn: !prevState.isToggleOn
+		}));
+	}
+
+	render() {
+		return (
+		<button onClick={this.handleClick}>
+			{this.state.isToggleOn ? 'ON' : 'OFF'}
+		</button>
+		);
+		
+	}
+}
+  
+ReactDOM.render(
+<Toggle />,
+document.getElementById('root')
+);
+
 var distance = 2.1385;
+
+//function createRow(crateKey,){
+	
+
+//}
+
 var getCrateValue = function(price,tradelevel){
 	var bargain = 1.05+tradelevel*0.005;
 	var bonus = bargain * distance;
