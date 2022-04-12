@@ -42,15 +42,11 @@ class CrateForm extends React.Component {
                 <p>
                     This calculator assumes you always take the desert buff if you're high enough level.
                 </p>
-                <select id="location">
-                    <option selected value="grana">Grana</option>
-                    <option value="oldwisdom">Old Wisdom</option>
-                    <option value="trent">Trent</option>
-                </select>
+                
                 <Gtradelevel  />
                 <Rtradelevel onTradelevelChange={this.handleTradelevelChange} />
                 <p>BSP Value:
-                    <input type="text" id="bspprice" value="2250" size="3"></input>
+                    <input type="text" id="bspprice" size="3"></input>
                 </p>
 
 
@@ -60,4 +56,10 @@ class CrateForm extends React.Component {
     }
 
 }
+/*
+<select id="location">
+                    <option selected value="grana">Grana</option>
+                    <option value="oldwisdom">Old Wisdom</option>
+                    <option value="trent">Trent</option>
+                </select>*/
 export default CrateForm;
