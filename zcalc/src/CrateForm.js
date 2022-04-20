@@ -32,10 +32,14 @@ class CrateForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = { tradelevel: this.props.defaultTradeLevel };
+        //this.handleChange = this.handleChange.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.handleGchange = this.handleGchange.bind(this);
+        this.handleTchange = this.handleTchange.bind(this);
     }
     onChange(e){
         console.log("a");
-        this.state.handleSubmit(e.target.value);
+        this.props.handleSubmit(e.target.value);
     }
     handleGchange(e){
         this.setState({tradelevel:e.target.slvl+e.target.tlvl});

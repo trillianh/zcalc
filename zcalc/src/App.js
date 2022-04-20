@@ -11,6 +11,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {rows: []};
+    
+    this.addCrateRow = this.addCrateRow.bind(this);
   }
   addCrateRow(e) {
     const newRow = (
@@ -32,7 +34,7 @@ class App extends React.Component {
     <div className="App">
       <header className="App-header">
         <br></br>
-        <CrateForm handleSubmit={this.addCrateRow} />
+        <CrateForm handleSubmit={this.addCrateRow} defaultTradeLevel="67" />
         <CrateTable rowArray={rows} />
       </header>
     </div>
