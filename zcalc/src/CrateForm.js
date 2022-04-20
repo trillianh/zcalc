@@ -31,29 +31,43 @@ function toGamelevel(truelevel) {
 class CrateForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { tradelevel: 67 };
+        this.state = { tradelevel: this.props.defaultTradeLevel };
     }
     onChange(e){
-        this.props.onSubmit(e.target.value);
+        console.log("a");
+        this.state.handleSubmit(e.target.value);
     }
-    handleTradelevelChange(e){
+    handleGchange(e){
+        this.setState({tradelevel:e.target.slvl+e.target.tlvl});
+    }
+    handleTchange(e){
+        this.setState({tradelevel:e.target.slvl+e.target.tlvl});
+    }
 
-    }
     render() {
+        const sublevel = toGamelevel(this.state.tradelevel).sublevel;
+        const title = toGamelevel(this.props.defaultTradeLevel).title;
+        const rlvl = this.state.tradelevel;
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.onChange}>
                 <p>
                     This calculator assumes you always take the desert buff if you're high enough level.
                 </p>
                 
-                <Gtradelevel slvl={toGamelevel(this.props.defaultTradeLevel).sublevel} 
-                tlvl={toGamelevel(this.props.defaultTradeLevel).title} onSublevelChange={this.handleTradelevelChange} onTitleChange={this.handleTradelevelChange} />
-                <p>Trade Level: <Rtradelevel onTradelevelChange={this.handleTradelevelChange} /> </p>
+                <Gtradelevel 
+                slvl={sublevel} 
+                tlvl={title} 
+                onSublevelChange={this.handleGchange} 
+                onTitleChange={this.handleGchange} 
+                />
+                <p>Trade Level:
+                <Rtradelevel 
+                rlvl={rlvl}
+                onTradelevelChange={this.handleTchange} 
+                /> </p>
                 <p>BSP Value:
                     <input type="text" id="bspprice" size="3" defaultValue="2500"></input>
                 </p>
-
-
                 <button type="submit">Add crate</button>
             </form>
         );

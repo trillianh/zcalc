@@ -5,12 +5,12 @@ class TradeTitle extends React.Component{
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(e){
-        this.props.onTitleChange(e.target.value)
+        this.props.onTitleChange(e.target.value);
     }
     render(){
         const ttitle=this.props.tradetitle;
         return (
-            <select value={ttitle}>
+            <select defaultValue={ttitle}>
                 <option value={0}>Beginner</option>
                 <option value={10}>Apprentice</option>
                 <option value={20}>Skilled</option>
