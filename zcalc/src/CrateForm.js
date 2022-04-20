@@ -43,7 +43,6 @@ class CrateForm extends React.Component {
     handleTchange(e){
         this.setState({tradelevel:e.target.slvl+e.target.tlvl});
     }
-
     render() {
         const sublevel = toGamelevel(this.state.tradelevel).sublevel;
         const title = toGamelevel(this.props.defaultTradeLevel).title;
