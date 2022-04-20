@@ -2,21 +2,42 @@ import logo from './logo.svg';
 import './App.css';
 import './crate.js';
 import CrateForm from './CrateForm.js';
+import CrateTable from './CrateTable';
+import crate from './crate.js';
+import { render } from '@testing-library/react';
+import React from "react";
 
-function App() {
-  function addCrate(e) {
-
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {rows: []};
   }
-  return (
+  addCrateRow(e) {
+    const newRow = (
+      <tr>
+        <td><input type="Button" /></td>
+        <td><input type="text" id="steelq" value="1" size="1" />x </td>
+        <td value=""></td>
+        <td value="1"></td>
+        <td><input type="text" id="steelprice" value="7700" size="1" /></td>
+        <td id="steelratio"></td>
+        <td id="steelt">151,108</td>
+      </tr>
+    );
+    this.state.rows.push(newRow);
+  }
+  render() {
+    const rows = this.state.rowArray;
+    return (
     <div className="App">
       <header className="App-header">
-        a
         <br></br>
-        <CrateForm onSubmit={addCrate} />
+        <CrateForm handleSubmit={this.addCrateRow} />
+        <CrateTable rowArray={rows} />
       </header>
-
     </div>
-  );
+    );
+  }
 }
 
 

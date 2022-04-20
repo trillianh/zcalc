@@ -4,25 +4,28 @@ import TradeTitle from "./TradeTitle";
 class Gtradelevel extends React.Component{
     constructor(props){
         super(props);
-        this.state = {tradelevel: 67};
-        this.handleSublevelChange=this.handleSublevelChange.bind(this);
-        this.handleTitleChange=this.handleTitleChange.bind(this);
+        this.state = {sublevel:this.props.slvl,title:this.props.tlvl};
+        //this.state = {tradelevel: 67};
+        //this.handleSublevelChange=this.handleSublevelChange.bind(this);
+        //this.handleTitleChange=this.handleTitleChange.bind(this);
         //this.handleChange = this.handleChange.bind(this);
     }
     handleTitleChange(e){
-        //this.setState({tlvl:e.target.value});
-        //this.setState({tradelevel:this.tlvl+this.slvl});
+        this.setState({title:e.target.value});
+        this.props.handleTradelevelChange(e.target.value);
     }
     handleSublevelChange(e){
-        //this.setState({slvl:e.target.value});
-        //this.setState({tradelevel:tlvl+slvl});
+        this.setState({sublevel:e.target.value});
+        this.props.handleTradelevelChange(e.target.value);
     }
 
     render(){
+        const title = this.state.title;
+        const sublevel = this.props.sublevel;
         return (
             <div>
-                <TradeTitle onTitleChange={this.handleTitleChange} />
-                <Sublevel onSublevelChange={this.handleSublevelChange} />
+                <TradeTitle onTitleChange={this.handleTitleChange} tradetitle={title} />
+                <Sublevel onSublevelChange={this.handleSublevelChange} sublevel={sublevel} />
             </div>
         );
     }

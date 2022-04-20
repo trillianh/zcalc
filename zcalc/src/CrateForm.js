@@ -34,23 +34,27 @@ class CrateForm extends React.Component {
         this.state = { tradelevel: 67 };
     }
     onChange(e){
-        
+        this.props.onSubmit(e.target.value);
+    }
+    handleTradelevelChange(e){
+
     }
     render() {
         return (
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <p>
                     This calculator assumes you always take the desert buff if you're high enough level.
                 </p>
                 
-                <Gtradelevel  />
-                <Rtradelevel onTradelevelChange={this.handleTradelevelChange} />
+                <Gtradelevel slvl={toGamelevel(this.props.defaultTradeLevel).sublevel} 
+                tlvl={toGamelevel(this.props.defaultTradeLevel).title} onSublevelChange={this.handleTradelevelChange} onTitleChange={this.handleTradelevelChange} />
+                <p>Trade Level: <Rtradelevel onTradelevelChange={this.handleTradelevelChange} /> </p>
                 <p>BSP Value:
-                    <input type="text" id="bspprice" size="3"></input>
+                    <input type="text" id="bspprice" size="3" defaultValue="2500"></input>
                 </p>
 
 
-                <submit>Add crate</submit>
+                <button type="submit">Add crate</button>
             </form>
         );
     }

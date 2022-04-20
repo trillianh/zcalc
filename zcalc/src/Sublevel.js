@@ -9,7 +9,7 @@ class Sublevel extends React.Component {
     render() {
         const sublevel = this.props.sublevel;
         return (
-            <input value={sublevel}></input>
+            <input value={sublevel} size="1"></input>
         );
     }
 
