@@ -4,9 +4,10 @@ class CrateTable extends React.Component {
         super(props);
     }
     render() {
+        const rowArray = this.props.rowArray;
         return (
             <table>
-                {this.props.rowArray}
+                {rowArray}
             </table>
         );
     }

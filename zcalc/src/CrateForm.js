@@ -33,11 +33,12 @@ class CrateForm extends React.Component {
         super(props);
         this.state = { tradelevel: this.props.defaultTradeLevel };
         //this.handleChange = this.handleChange.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleGchange = this.handleGchange.bind(this);
         this.handleTchange = this.handleTchange.bind(this);
     }
-    onChange(e){
+    handleSubmit(e){
+        e.preventDefault();
         console.log("a");
         this.props.handleSubmit(e.target.value);
     }
@@ -52,7 +53,7 @@ class CrateForm extends React.Component {
         const title = toGamelevel(this.props.defaultTradeLevel).title;
         const rlvl = this.state.tradelevel;
         return (
-            <form onSubmit={this.onChange}>
+            <form onSubmit={this.handleSubmit}>
                 <p>
                     This calculator assumes you always take the desert buff if you're high enough level.
                 </p>
