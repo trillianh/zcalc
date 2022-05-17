@@ -2,9 +2,10 @@ import React from "react";
 class Sublevel extends React.Component {
     constructor(props){
         super(props);
+        this.handleChange = this.handleChange.bind(this);
     }
-    onSubLevelChange(){
-        
+    handleChange(e){
+        this.props.onSublevelChange(e.target.value);
     }
     render() {
         const sublevel = this.props.sublevel;

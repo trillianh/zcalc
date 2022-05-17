@@ -39,8 +39,8 @@ class CrateForm extends React.Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        console.log("a");
         this.props.handleSubmit(e.target.value);
+
     }
     handleGchange(e){
         this.setState({tradelevel:e.target.slvl+e.target.tlvl});
@@ -72,7 +72,24 @@ class CrateForm extends React.Component {
                 <p>BSP Value:
                     <input type="text" id="bspprice" size="3" defaultValue="2500"></input>
                 </p>
-                <button type="submit">Add crate</button>
+                <select>
+                    <option value="calph">Calpheon Timber</option>
+                    <option value="bal">Balenos Timber</option>
+                    <option value="med">Mediah Timber</option>
+                    <option value="ser">Serendia Timber</option>
+                    <option value="steel">Steel Ingot</option>
+                    <option value="bronze">Bronze Ingot</option>
+                    <option value="brass">Brass Ingot</option>
+                    <option value="vanadium">Vanadium Ingot</option>
+                    <option value="titanium">Titanium Ingot</option>
+                    <option value="mythril">Mythril Ingot</option>
+                    <option value="copperore">Copper Ore</option>
+                    <option value="ironore">Iron Ore</option>
+                    <option value="leadore">Lead Ore</option>
+                    <option value="zincore">Zinc Ore</option>
+                    <option value="tinore">Tin Ore</option>
+                    <option value="jewelry">Jewelry</option>
+                    </select><button type="submit">Add crate</button>
             </form>
         );
     }

@@ -18,6 +18,12 @@ class Gtradelevel extends React.Component{
         this.setState({sublevel:e.target.value});
         this.props.handleTradelevelChange(e.target.value);
     }
+    setTitle(t){
+        this.setState({title:t});
+    }
+    setSublevel(s){
+        this.setState({sublevel:s});
+    }
 
     render(){
         const title = this.state.title;
