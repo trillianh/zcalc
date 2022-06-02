@@ -26,9 +26,13 @@ class Crate extends React.Component {
     return (
       <div className="crate">
         <table>
-            <td>a</td>
-            <td>b</td>
-            <td>c</td>
+            <td><input type="Button" id="addstack" value="+stack"/></td>
+            <td><input type="text" id="q" value="1" size="1"/>x</td>
+            <td>{this.props.info.crateType}</td>
+            <td>zero</td>
+            <td><input type="text" id="buy"/></td>
+            <td>ratio</td>
+            <td>value</td>
         </table>
       </div>
     );
