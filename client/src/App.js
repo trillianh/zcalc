@@ -35,16 +35,32 @@ function toGamelevel(truelevel) {
   }
   return r;
 }
+
+let matnames = {"calpheon":""};
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {rows: [], tradelevel: this.props.defaultTradeLevel};
+    this.state = {dbcd: -1, rows: [], tradelevel: this.props.defaultTradeLevel};
     this.handleGchange = this.handleGchange.bind(this);
     this.handleTchange = this.handleTchange.bind(this);
-    
+    this.handleTest = this.handleTest.bind(this);
     this.addCrateRow = this.addCrateRow.bind(this);
   }
-  addCrateRow(crateInfo) {
+  async handleTest(e){
+    const response = await fetch("http://localhost:5000/mats/test",{method:"POST",headers:{ "Content-Type": "application/json",},body:JSON.stringify({})}).catch(error => {
+        window.alert(error);
+        return;
+      });
+      const a = await response.json();
+      this.setState({dbcd:Math.round(a.cooldown/60000)});
+  }
+  async addCrateRow(crateInfo) {
+    const response = await fetch("http://localhost:5000/mats/test",{method:"POST",headers:{ "Content-Type": "application/json",},body:JSON.stringify({})}).catch(error => {
+        window.alert(error);
+        return;
+      });
+      const a = await response.json();
+      this.setState({dbcd:Math.round(a.cooldown/60000)});
     const newRow = (<Crate info={crateInfo} />);
     let r = this.state.rows;
     r.push(newRow);
@@ -62,13 +78,14 @@ class App extends React.Component {
     const title = toGamelevel(this.props.defaultTradeLevel).title;
     const rlvl = this.state.tradelevel;
     const rows = this.state.rows;
+    const dbcd = this.state.dbcd;
     return (
     <div className="App">
         <br></br>
         <p>
-                    This calculator assumes you always take the desert buff if you're high enough level.
+                    This calculator assumes you always take the desert buff if you're high enough level. 
                 </p>
-
+                last price update: {(dbcd==-1)?"":dbcd+" minutes ago"} 
                 <Gtradelevel
                     slvl={sublevel}
                     tlvl={title}
@@ -84,7 +101,7 @@ class App extends React.Component {
                     <input value={this.state.bspPrice} type="text" size="3" defaultValue="2500"></input>
                 </p>
         <CrateForm handleSubmit={this.addCrateRow} crateType="" defaultTradeLevel="67" />
-        <CrateTable rowArray={rows} />
+        <CrateTable rowArray={rows} level={rlvl} />
     </div>
     );
   }

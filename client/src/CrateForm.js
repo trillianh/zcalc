@@ -3,13 +3,13 @@ import React from "react";
 class CrateForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {crateType:"calpheon"};
+        this.state = {crateType:"calpheon",level:this.props.defaultTradeLevel};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCrateTypeChange = this.handleCrateTypeChange.bind(this);
     }
     handleSubmit(e) {
         e.preventDefault();
-        let crateInfo = {crateType:this.state.crateType};
+        let crateInfo = {crateType:this.state.crateType,level:this.state.level};
         this.props.handleSubmit(crateInfo);
 
     }
