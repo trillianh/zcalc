@@ -8,6 +8,8 @@ import { render } from '@testing-library/react';
 import React from "react";
 import Gtradelevel from "./Gtradelevel";
 import Rtradelevel from "./Rtradelevel";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 
 function toGamelevel(truelevel) {
@@ -35,16 +37,28 @@ function toGamelevel(truelevel) {
   }
   return r;
 }
-
-let matnames = {"calpheon":""};
+let matid = {"calpheon":[4661,4667,4664],"balenos":[4652,4655]};
 class App extends React.Component {
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+    };
+    
   constructor(props) {
     super(props);
-    this.state = {dbcd: -1, rows: [], tradelevel: this.props.defaultTradeLevel};
+    const { cookies } = props;
+    let cookieRows = [];
+    if(cookies.get('state')){
+      for(var i in cookies.get('state')){
+        const newRow = (<Crate info={cookies.get('state')[i]} saveCookie={this.saveStateToCookie} />);
+        cookieRows.push(newRow);
+      }
+    }
+    this.state = {dbcd: -1, rows: cookieRows||[], tradelevel: this.props.defaultTradeLevel};
     this.handleGchange = this.handleGchange.bind(this);
     this.handleTchange = this.handleTchange.bind(this);
     this.handleTest = this.handleTest.bind(this);
     this.addCrateRow = this.addCrateRow.bind(this);
+    this.saveStateToCookie = this.saveStateToCookie.bind(this);
   }
   async handleTest(e){
     const response = await fetch("http://localhost:5000/mats/test",{method:"POST",headers:{ "Content-Type": "application/json",},body:JSON.stringify({})}).catch(error => {
@@ -53,6 +67,7 @@ class App extends React.Component {
       });
       const a = await response.json();
       this.setState({dbcd:Math.round(a.cooldown/60000)});
+      this.saveStateToCookie();
   }
   async addCrateRow(crateInfo) {
     const response = await fetch("http://localhost:5000/mats/test",{method:"POST",headers:{ "Content-Type": "application/json",},body:JSON.stringify({})}).catch(error => {
@@ -61,17 +76,27 @@ class App extends React.Component {
       });
       const a = await response.json();
       this.setState({dbcd:Math.round(a.cooldown/60000)});
-    const newRow = (<Crate info={crateInfo} />);
+    const newRow = (<Crate info={crateInfo} saveCookie={this.saveStateToCookie} />);
     let r = this.state.rows;
     r.push(newRow);
     this.setState({rows: r});
-    
+    this.saveStateToCookie();
   }
   handleGchange(e) {
       this.setState({ tradelevel: e.target.slvl + e.target.tlvl });
+      this.saveStateToCookie();
   }
   handleTchange(e) {
       this.setState({ tradelevel: e.target.slvl + e.target.tlvl });
+      this.saveStateToCookie();
+  }
+  saveStateToCookie(){
+    const { cookies } = this.props;
+    let rowCookie = [];
+    for(var i in this.state.rows){
+      rowCookie[i]=this.state.rows[i].props.info;
+    }
+    cookies.set('state', rowCookie, { path: '/' });
   }
   render() {
     const sublevel = toGamelevel(this.state.tradelevel).sublevel;
@@ -108,4 +133,4 @@ class App extends React.Component {
 }
 
 
-export default App;
+export default withCookies(App);

@@ -96,25 +96,25 @@ else{
   let cd = time-lastupdate;
   console.log("cooldown:"+time+" "+lastupdate);
   returndb(function(err,res2){
+    console.log(res2[0]._id);
     res.json({
       "cooldown":cd,
       "db":res2
     });
-  }).catch(function (error) {
-    console.log(error);
   });
   
 }
 });
 });
 
+ 
 function returndb(callback){
   let a;
   let db_connect=dbo.getDb("zcalcdb");
-   col.find({}).toArray(callback);
-  return db.connect.collection("market").find({});
+  let connect = db_connect.collection("market");
+  connect.find({}).toArray(callback);
 }
- /*
+/*
 matRoutes.route("/mats/test1").post(function(req,res){
   //console.log("route");
   res.json({asdf:"a"});
