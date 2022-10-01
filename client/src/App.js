@@ -47,18 +47,19 @@ class App extends React.Component {
     super(props);
     const { cookies } = props;
     let cookieRows = [];
-    if(cookies.get('state')){
-      for(var i in cookies.get('state')){
-        const newRow = (<Crate info={cookies.get('state')[i]} saveCookie={this.saveStateToCookie} />);
-        cookieRows.push(newRow);
-      }
-    }
-    this.state = {dbcd: -1, rows: cookieRows||[], tradelevel: this.props.defaultTradeLevel};
     this.handleGchange = this.handleGchange.bind(this);
     this.handleTchange = this.handleTchange.bind(this);
     this.handleTest = this.handleTest.bind(this);
     this.addCrateRow = this.addCrateRow.bind(this);
     this.saveStateToCookie = this.saveStateToCookie.bind(this);
+    this.handleRemoveCrate = this.handleRemoveCrate.bind(this);
+    if(cookies.get('state')){
+      for(var i in cookies.get('state')){
+        const newRow = (cookies.get('state')[i]);
+        cookieRows.push(newRow);
+      }
+    }
+    this.state = {dbcd: -1, rows: cookieRows||[], tradelevel: this.props.defaultTradeLevel};
   }
   async handleTest(e){
     const response = await fetch("http://localhost:5000/mats/test",{method:"POST",headers:{ "Content-Type": "application/json",},body:JSON.stringify({})}).catch(error => {
@@ -76,9 +77,21 @@ class App extends React.Component {
       });
       const a = await response.json();
       this.setState({dbcd:Math.round(a.cooldown/60000)});
-    const newRow = (<Crate info={crateInfo} saveCookie={this.saveStateToCookie} />);
+      const d = new Date();
+      let time = d.getTime();
+    const newRow = {info:crateInfo, id:{time}};
     let r = this.state.rows;
     r.push(newRow);
+    this.setState({rows: r});
+    this.saveStateToCookie();
+  }
+  handleRemoveCrate(id){
+    let r = this.state.rows;
+    for(var i in r){
+      if(r[i].id==id){
+        r.splice(i,1);
+      }
+    }
     this.setState({rows: r});
     this.saveStateToCookie();
   }
@@ -94,7 +107,7 @@ class App extends React.Component {
     const { cookies } = this.props;
     let rowCookie = [];
     for(var i in this.state.rows){
-      rowCookie[i]=this.state.rows[i].props.info;
+      rowCookie[i]=this.state.rows[i];
     }
     cookies.set('state', rowCookie, { path: '/' });
   }
@@ -104,6 +117,11 @@ class App extends React.Component {
     const rlvl = this.state.tradelevel;
     const rows = this.state.rows;
     const dbcd = this.state.dbcd;
+    const ra = this.state.rows;
+    const rowArray = [];
+    for(var i in ra){
+        rowArray.push(<Crate info={ra[i].info} saveCookie={this.saveStateToCookie} remove={this.handleRemoveCrate} id={ra[i].id} />)
+    }
     return (
     <div className="App">
         <br></br>
@@ -126,7 +144,7 @@ class App extends React.Component {
                     <input value={this.state.bspPrice} type="text" size="3" defaultValue="2500"></input>
                 </p>
         <CrateForm handleSubmit={this.addCrateRow} crateType="" defaultTradeLevel="67" />
-        <CrateTable rowArray={rows} level={rlvl} />
+        <CrateTable rowArray={rowArray} level={rlvl} />
     </div>
     );
   }

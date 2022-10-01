@@ -68,9 +68,10 @@ const multimat = ["calpheon", "balenos", "mediah", "serendia", "jewelry", "snowf
 class Crate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { quantity: 1 , info:props.info};
+    this.state = { quantity: 1 , info:props.info  };
     this.handleAddStack = this.handleAddStack.bind(this);
     this.handleCrateQuantityChange = this.handleCrateQuantityChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
   handleAddStack(e) {
     this.setState({ quantity: this.state.quantity + 7157 });
@@ -80,8 +81,12 @@ class Crate extends React.Component {
     this.setState({ quantity: e.target.value });
     this.props.saveCookie();
   }
+  handleRemove(e){
+    this.props.remove(this.props.id);
+  }
 
   render() {
+    console.log("a"+this.state.info.crateType);
     return (
       <tbody><tr>
         <td><button id="addstack" onClick={this.handleAddStack}>+stack</button></td>
