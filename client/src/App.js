@@ -37,6 +37,13 @@ function toGamelevel(truelevel) {
   }
   return r;
 }
+function getCrateInfo(array,id){
+  for(var i in array){
+    if(array[i]["_id"]==id){
+      return array[i];
+    }
+  }
+}
 let matid = {"calpheon":[4661,4667,4664],"balenos":[4652,4655]};
 class App extends React.Component {
     static propTypes = {
@@ -77,6 +84,13 @@ class App extends React.Component {
       });
       const a = await response.json();
       this.setState({dbcd:Math.round(a.cooldown/60000)});
+      //console.log(a.db[3].stock);
+      const prices = [];
+      const ids = matid[crateInfo.crateType];
+      for(var i in ids){
+        prices.push(getCrateInfo(a.db,ids[i]));
+      }
+      crateInfo.prices = prices;
       const d = new Date();
       let time = d.getTime();
     const newRow = {info:crateInfo, id:{time}};
@@ -85,6 +99,7 @@ class App extends React.Component {
     this.setState({rows: r});
     this.saveStateToCookie();
   }
+
   handleRemoveCrate(id){
     let r = this.state.rows;
     for(var i in r){

@@ -24,9 +24,9 @@ var getMetalZero = function (price, tradelevel) {
 }
 const matid = {
   "calpheon":[["4604","4606","4607"],["4660","4663","4666"],["592","594","596"]],
-  "balenos":[[],[]],
-  "mediah":[[],[],[]],
-  "serendia":[[],[],[]],
+  "balenos":[["4652","4655"]],
+  "mediah":[["4677","4681"]],
+  "serendia":[["4655","4658"]],
   "steel":[[],[],[]],
   "bronze":[[],[],[]],
   "vanadium":[[],[],[]],
@@ -37,9 +37,10 @@ const matid = {
   "tinore":[],
   "zincore":[],
   "jewelry":[[],[],[]],
-  "snowfieldtimber":[[],[],[]],
-  "thorntimber":[[],[],[]],
-  "snowfieldjade":[[],[],[]],
+  "snowfieldtimber":[["4722","4702"]],
+  "thorntimber":[["4722","4711"]],
+  "snowfieldjade":[["4493","4086"]],
+  "snowfieldobsidian":[["4089","4272"]],
 }
 const prices = {
   calpheon: 98640,
@@ -68,10 +69,16 @@ const multimat = ["calpheon", "balenos", "mediah", "serendia", "jewelry", "snowf
 class Crate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { quantity: 1 , info:props.info  };
+    if(props.quantity){
+      this.state = { quantity: props.quantity , info:props.info  };
+    }
+    else{
+      this.state = { quantity: 1 , info:props.info  };
+    }
     this.handleAddStack = this.handleAddStack.bind(this);
     this.handleCrateQuantityChange = this.handleCrateQuantityChange.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleMaxStack = this.handleMaxStack.bind(this);
   }
   handleAddStack(e) {
     this.setState({ quantity: this.state.quantity + 7157 });
@@ -81,24 +88,34 @@ class Crate extends React.Component {
     this.setState({ quantity: e.target.value });
     this.props.saveCookie();
   }
+  handleMaxStack(){
+    this.setState({ quantity: 7157 });
+    this.props.saveCookie();
+  }
   handleRemove(e){
     this.props.remove(this.props.id);
   }
 
   render() {
-    console.log("a"+this.state.info.crateType);
+    console.log("a"+this.state.info.level);
+    var zeroes = "";
+    var tfprices = [];
+    for(var i in this.state.info.prices){
+      var pr = this.state.info.prices[i].price
+      zeroes = zeroes.concat(pr, " ");
+      tfprices[i] = <input size = "5" type = "text" id="buy" defaultValue={pr} />;
+    }
     return (
       <tbody><tr>
         <td><button id="addstack" onClick={this.handleAddStack}>+stack</button></td>
         <td><input type="text" id="q" value={this.state.quantity} onChange={this.handleCrateQuantityChange} size="1" />x</td>
         <td>{this.state.info.crateType}</td>
         <td>{(multimat.includes(this.state.info.crateType)) ? "" : getMetalZero(this.state.info.crateType)}</td>
-        <td><input type="text" id="buy" />{this.state.info.quantity}</td>
+        <td>{tfprices}</td>
         <td>ratio</td>
         <td>{Number(getCrateValue(prices[this.state.info.crateType], this.state.info.level) * this.state.quantity).toLocaleString()}</td>
         <td><button id="remove" onClick={this.handleRemove}>x</button></td>
       </tr></tbody>
-
     );
   }
 }
