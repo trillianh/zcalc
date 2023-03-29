@@ -9,19 +9,20 @@ const med = 77850;
 var steeld = 7700;
 var bronzed = 10730;
 var brassd = 11000;
-var distance = 2.1385;
+var distanceVal = 2.1385;
+var distanceAre = 2.1385;
 var getCrateValue = function(price,tradelevel){
 	var bargain = 1.05+tradelevel*0.005;
-	var bonus = bargain * distance;
-	var crateprice = price*bonus;
+	var bonus = bargain * distanceVal;
+	var crateprice = 2 * price * bonus;
 	if(tradelevel>41){
-		crateprice *= 1.5;
+		//crateprice *= 1.5;
 	}
 	return parseInt(crateprice);
 }
 var getMetalZero = function(price,tradelevel){
 	var bargain = 1.05+tradelevel*0.005;
-	var bonus = bargain * distance;
+	var bonus = bargain * distanceVal;
 	var crateprice = price*bonus;
 	if(tradelevel>41){
 		crateprice *= 1.5;
@@ -30,7 +31,7 @@ var getMetalZero = function(price,tradelevel){
 }
 /*var getCalphZero = function(price,tradelevel){
 	var bargain = 1.05+tradelevel*0.005;
-	var bonus = bargain * distance;
+	var bonus = bargain * distanceVal;
 	var crateprice = price*bonus;
 	if(tradelevel>41){
 		crateprice *= 1.5;
@@ -39,7 +40,7 @@ var getMetalZero = function(price,tradelevel){
 }
 var getBalZero = function(price,tradelevel){
 	var bargain = 1.05+tradelevel*0.005;
-	var bonus = bargain * distance;
+	var bonus = bargain * distanceVal;
 	var crateprice = price*bonus;
 	if(tradelevel>41){
 		crateprice *= 1.5;
@@ -136,13 +137,13 @@ function refresh(){
 	var selectedtrade = document.getElementById("tradetitle").selectedIndex;
 	var selectedlocation = document.getElementById("location").selectedIndex;
 	if(selectedlocation==0){
-		distance = 2.1385;
+		distanceVal = 2.1385;
 	}
 	else if(selectedlocation==1){
-		distance = 2.0407;
+		distanceVal = 2.0407;
 	}
 	else if(selectedlocation==2){
-		distance = 1.9984;
+		distanceVal = 1.9984;
 	}
 	if(selectedtrade==6){
 		selectedtrade += 2
